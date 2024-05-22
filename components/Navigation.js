@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { IoClose } from "react-icons/io5";
 import { BiChevronRight } from "react-icons/bi";
@@ -30,7 +30,30 @@ const navigationMenu = [
 ];
 
 const Navigation = () => {
-  const [navOpen, setNavOpen] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
+  const mobileMenuHandler = () => {
+    setNavOpen(!navOpen);
+  };
+
+  // 768以上
+  const [mobile, setMobile] = useState({});
+  useEffect(() => {
+    function handleResize() {
+      setMobile({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+      if (mobile.width > 768 && navOpen) {
+        setNavOpen(false);
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
   return (
     <>
       {/* web menu */}
@@ -70,7 +93,7 @@ const Navigation = () => {
               </Link>
 
               {/* for mobile */}
-              <button className="block lg:hidden">
+              <button onClick={mobileMenuHandler} className="block lg:hidden">
                 <HiOutlineBars3 className="text-4xl" />
               </button>
             </div>
@@ -80,10 +103,16 @@ const Navigation = () => {
 
       {/* mobile menu */}
       <div className={navOpen ? "py-0 block w-screen z-[999]" : "hidden"}>
-        <div className="h-screen w-screen z-[999] top-0 fixed bg-black bg-opacity-50">
+        <div
+          onClick={mobileMenuHandler}
+          className="h-screen w-screen z-[999] top-0 fixed bg-black bg-opacity-50"
+        >
           <div className="h-screen bg-white w-[380px] top-0 right-0 z-[999] fixed">
             <div className="h-14 px-10 border-b flex items-center">
-              <button className="flex items-center space-x-3">
+              <button
+                onClick={mobileMenuHandler}
+                className="flex items-center space-x-3"
+              >
                 <IoClose />
                 <span>閉じる</span>
               </button>
@@ -94,6 +123,7 @@ const Navigation = () => {
                   <li key={index}>
                     <Link
                       href={item.href}
+                      onClick={() => setNavOpen(false)}
                       className="group flex items-center py-2 duration-300 
                       transition-all ease-out hover:text-green-500"
                     >
