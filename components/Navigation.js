@@ -1,6 +1,7 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { IoClose } from "react-icons/io5";
 import { BiChevronRight } from "react-icons/bi";
@@ -29,6 +30,7 @@ const navigationMenu = [
 ];
 
 const Navigation = () => {
+  const [navOpen, setNavOpen] = useState(true);
   return (
     <>
       {/* web menu */}
@@ -77,25 +79,34 @@ const Navigation = () => {
       </header>
 
       {/* mobile menu */}
-      <div>
-        <div>
-          <div>
-            <div>
-              <button>
+      <div className={navOpen ? "py-0 block w-screen z-[999]" : "hidden"}>
+        <div className="h-screen w-screen z-[999] top-0 fixed bg-black bg-opacity-50">
+          <div className="h-screen bg-white w-[380px] top-0 right-0 z-[999] fixed">
+            <div className="h-14 px-10 border-b flex items-center">
+              <button className="flex items-center space-x-3">
                 <IoClose />
                 <span>閉じる</span>
               </button>
             </div>
-            <div>
-              <ul>
-                <li>
-                  <Link href="">
-                    <span>ホーム</span>
-                    <span>
-                      <BiChevronRight />
-                    </span>
-                  </Link>
-                </li>
+            <div className="h-full py-3 px-10 pb-20">
+              <ul className="block mb-7">
+                {navigationMenu.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      href={item.href}
+                      className="group flex items-center py-2 duration-300 
+                      transition-all ease-out hover:text-green-500"
+                    >
+                      <span>{item.label}</span>
+                      <span
+                        className="relative left-2 duration-300 transition-all 
+                        ease-in-out opacity-0 group-hover:opacity-100 group-hover:left-3"
+                      >
+                        <BiChevronRight className="text-xl" />
+                      </span>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
