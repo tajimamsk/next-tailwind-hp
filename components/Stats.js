@@ -1,6 +1,10 @@
+"use client";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { BiChevronRight } from "react-icons/bi";
 
 const statsContent = {
@@ -26,6 +30,14 @@ const statsContent = {
 };
 
 const Stats = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      easing: "slide",
+      once: true,
+    });
+  }, []);
+
   return (
     <section className="p-20 pb-10">
       <div className="container px-4 mx-auto">
@@ -33,17 +45,25 @@ const Stats = () => {
           {/* left */}
           <div className="w-full lg:w-7/12 mb-20 lg:mb-0">
             <div className="grid grid-cols-3">
-              {statsContent.stats.map((item, index) => (
-                <div key={index} className="text-center lg:text-left">
-                  <strong
-                    className="text-green-500 text-4xl xl:text-[52px]
-                  font-bold block leading-tight"
+              {statsContent.stats.map((item, index) => {
+                index * 100;
+                return (
+                  <div
+                    key={index}
+                    className="text-center lg:text-left"
+                    data-aos="fade-up"
+                    data-aos-delay={index}
                   >
-                    {item.number}
-                  </strong>
-                  <span className="text-body">{item.label}</span>
-                </div>
-              ))}
+                    <strong
+                      className="text-green-500 text-4xl xl:text-[52px]
+                    font-bold block leading-tight"
+                    >
+                      {item.number}
+                    </strong>
+                    <span className="text-body">{item.label}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -56,6 +76,8 @@ const Stats = () => {
                 height={200}
                 alt="img"
                 className="absolute right-0 lg:-right-3 w-52 -top-3"
+                data-aos="fade-left"
+                data-aos-delay="100"
               />
               <h3 className="text-heading font-bold text-lg mb-3">
                 {statsContent.text.title}
