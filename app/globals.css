@@ -7,3 +7,8 @@
   transition-all ease-in-out duration-300 hover:bg-[#1e50a2]
   hover:shadow-lg hover:-top-1 relative top-0 inline-block;
 }
+.btnGreen {
+  @apply py-4 px-5 text-white rounded-lg bg-green-500 transition-all 
+  ease-in-out duration-300 hover:bg-[#006e54] hover:shadow-lg hover:-top-1 
+  relative top-0 inline-block;
+}
