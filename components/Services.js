@@ -8,8 +8,8 @@ import "aos/dist/aos.css";
 const servicesContent = {
   text: {
     subtitle: "グローシードの特徴",
-    title: "Reactに強い!",
-    description: "React! React! React! React! React! React! React!",
+    title: "React!",
+    description: "React! React! Recoil! Redux! React! React! React!",
   },
   items: [
     {
