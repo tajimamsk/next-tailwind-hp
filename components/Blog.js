@@ -1,7 +1,11 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
+
 import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const blogContent = {
   text: {
@@ -51,54 +55,102 @@ const Blog = () => {
   return (
     <section id="blog" className="py-20 bg-light overflow-x-hidden">
       <div className="container px-4 mx-auto">
-        {/* 左 */}
-        <div className="lg:w-5/12 mb-10 lg:mb-0">
-          <span
-            className="inline-block py-1 pl-3 text-heading font-semibold relative mb-7 
+        <div className="lg:flex justify-between items-center mb-10">
+          {/* 左 */}
+          <div className="lg:w-5/12 mb-10 lg:mb-0">
+            <span
+              className="inline-block py-1 pl-3 text-heading font-semibold relative mb-7 
             before:content-[' '] before:absolute before:w-2/3 before:bg-pinkLight 
             before:left-0 before:top-0 before:bottom-0 before:z-[-1]"
-          >
-            {blogContent.text.subtitle}
-          </span>
-          <h2 className="text-heading text-2xl lg:text-4xl font-bold mb-5">
-            {blogContent.text.title}
-          </h2>
-          <p className="text-body leading-relaxed">
-            {blogContent.text.description}
-          </p>
-        </div>
+            >
+              {blogContent.text.subtitle}
+            </span>
+            <h2 className="text-heading text-2xl lg:text-4xl font-bold mb-5">
+              {blogContent.text.title}
+            </h2>
+            <p className="text-body leading-relaxed">
+              {blogContent.text.description}
+            </p>
+          </div>
 
-        {/* 右 */}
-        <div className="lg:w-5/12 text-left lg:text-right">
-          <div className="inline-flex ml-auto space-x-3">
-            <div
-              className={`${isBeginning ? "" : ""}
-              group trasition-all duration-300 ease-in-out w-12 h-12 
-              cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
-              justify-center items-center`}
-            >
-              <FaChevronLeft
+          {/* 右 */}
+          <div className="lg:w-5/12 text-left lg:text-right">
+            <div className="inline-flex ml-auto space-x-3">
+              <div
                 className={`${isBeginning ? "" : ""}
-                text-3xl text-green-500 transition-all duration-300 
-                ease-in-out group-hover:text-white`}
-              />
-            </div>
-            <div
-              className={`${isEnd ? "" : ""}
               group trasition-all duration-300 ease-in-out w-12 h-12 
               cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
               justify-center items-center`}
-            >
-              <FaChevronRight
-                className={`${isEnd ? "" : ""}
+              >
+                <FaChevronLeft
+                  className={`${isBeginning ? "" : ""}
                 text-3xl text-green-500 transition-all duration-300 
                 ease-in-out group-hover:text-white`}
-              />
+                />
+              </div>
+              <div
+                className={`${isEnd ? "" : ""}
+              group trasition-all duration-300 ease-in-out w-12 h-12 
+              cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
+              justify-center items-center`}
+              >
+                <FaChevronRight
+                  className={`${isEnd ? "" : ""}
+                text-3xl text-green-500 transition-all duration-300 
+                ease-in-out group-hover:text-white`}
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* スライド */}
+        <Swiper
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+            },
+            768: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 2,
+            },
+          }}
+          className="z-50 py-32 relative flex items-stretch 
+          !overflow-visible before:content-[' '] before:py-32 before:z-50
+          before:right-full before:w-screen before:absolute before:-top-5 
+          before:-bottom-5 before:bg-light"
+        >
+          {blogContent.blog.map((item, index) => {
+            return (
+              <SwiperSlide key={index} className="overflow-visible h-full">
+                <div className="p-5 rounded-lg bg-white relative mt-10 m-3">
+                  <Link
+                    href={item.link}
+                    className="relative -mt-10 inline-block 
+                    overflow-hidden rounded-lg mb-4"
+                  >
+                    <Image
+                      src={item.img}
+                      width={782}
+                      height={467}
+                      alt="blogimg"
+                      className="h-60 object-cover"
+                    />
+                  </Link>
+                  <h2 className="text-heading text-lg font-bold leading-7 mb-5">
+                    <Link href={item.link} className="text-heading">
+                      {item.title}
+                    </Link>
+                  </h2>
+                  <p className="mb-6 text-body">{item.description}</p>
+                  <span className="text-sm">{item.date}</span>
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
 
         {/* ボタン */}
         <div className="mx-auto flex-col items-center justify-center w-fit">
