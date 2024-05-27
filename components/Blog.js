@@ -1,7 +1,95 @@
-import React from "react";
+"use client";
+import Link from "next/link";
+import React, { useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+const blogContent = {
+  text: {
+    subtitle: "ブログ・ニュース",
+    title: "新着ニュース",
+    description: "日々のブログや最新ニュースを投稿しています",
+  },
+};
 
 const Blog = () => {
-  return <div>Blog</div>;
+  const [isBeginning, setIsBeginning] = useState(null);
+  const [isEnd, setIsend] = useState(null);
+  return (
+    <section id="blog" className="py-20 bg-light overflow-x-hidden">
+      <div className="container px-4 mx-auto">
+        {/* 左 */}
+        <div className="lg:w-5/12 mb-10 lg:mb-0">
+          <span
+            className="inline-block py-1 pl-3 text-heading font-semibold relative mb-7 
+            before:content-[' '] before:absolute before:w-2/3 before:bg-pinkLight 
+            before:left-0 before:top-0 before:bottom-0 before:z-[-1]"
+          >
+            {blogContent.text.subtitle}
+          </span>
+          <h2 className="text-heading text-2xl lg:text-4xl font-bold mb-5">
+            {blogContent.text.title}
+          </h2>
+          <p className="text-body leading-relaxed">
+            {blogContent.text.description}
+          </p>
+        </div>
+
+        {/* 右 */}
+        <div className="lg:w-5/12 text-left lg:text-right">
+          <div className="inline-flex ml-auto space-x-3">
+            <div
+              className={`${isBeginning ? "" : ""}
+              group trasition-all duration-300 ease-in-out w-12 h-12 
+              cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
+              justify-center items-center`}
+            >
+              <FaChevronLeft
+                className={`${isBeginning ? "" : ""}
+                text-3xl text-green-500 transition-all duration-300 
+                ease-in-out group-hover:text-white`}
+              />
+            </div>
+            <div
+              className={`${isEnd ? "" : ""}
+              group trasition-all duration-300 ease-in-out w-12 h-12 
+              cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
+              justify-center items-center`}
+            >
+              <FaChevronRight
+                className={`${isEnd ? "" : ""}
+                text-3xl text-green-500 transition-all duration-300 
+                ease-in-out group-hover:text-white`}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* スライド */}
+
+        {/* ボタン */}
+        <div className="mx-auto flex-col items-center justify-center w-fit">
+          <Link
+            href={""}
+            className="duration-300 transition-all 
+            ease-in-out py-3 px-6 flex border rounded-full space-x-3
+            items-center hover:border-gray-400"
+          >
+            過去のニュースは
+            <strong className="text-green-500 px-1 font-semibold">
+              こちら
+            </strong>
+            <span className="text-body">|</span>
+            <span
+              className="bg-green-500 rounded-full w-8 h-8 flex 
+            items-center justify-center"
+            >
+              <FaChevronRight className="text-white text-2xl" />
+            </span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Blog;
