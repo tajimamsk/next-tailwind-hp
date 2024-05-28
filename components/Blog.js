@@ -2,10 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const blogContent = {
   text: {
@@ -52,52 +54,113 @@ const blogContent = {
 const Blog = () => {
   const [isBeginning, setIsBeginning] = useState(null);
   const [isEnd, setIsend] = useState(null);
+  const sliderRef = useRef(null);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      easing: "slide",
+      once: true,
+    });
+  }, []);
+
+  useEffect(() => {
+    const swiper = sliderRef.current.swiper;
+
+    const updateSlideStatus = () => {
+      setIsBeginning(swiper.isBeginning);
+      setIsend(swiper.isEnd);
+    };
+    swiper.on("slideChange", updateSlideStatus);
+    return () => {
+      swiper.off("slideChange", updateSlideStatus);
+    };
+  }, [sliderRef]);
+
+  // 戻る
+  const prevHandler = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slidePrev();
+  }, []);
+  // 次
+  const nextHandler = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slideNext();
+  }, []);
   return (
-    <section id="blog" className="py-20 bg-light overflow-x-hidden">
+    <section id="blog" className="py-20 bg-light overflow-x-hidden max-md:py-5">
       <div className="container px-4 mx-auto">
         <div className="lg:flex justify-between items-center mb-10">
           {/* 左 */}
           <div className="lg:w-5/12 mb-10 lg:mb-0">
             <span
               className="inline-block py-1 pl-3 text-heading font-semibold relative mb-7 
-            before:content-[' '] before:absolute before:w-2/3 before:bg-pinkLight 
-            before:left-0 before:top-0 before:bottom-0 before:z-[-1]"
+              before:content-[' '] before:absolute before:w-2/3 before:bg-pinkLight 
+              before:left-0 before:top-0 before:bottom-0 before:z-[-1]"
+              data-aos="fade-up"
+              data-aos-delay="100"
             >
               {blogContent.text.subtitle}
             </span>
-            <h2 className="text-heading text-2xl lg:text-4xl font-bold mb-5">
+            <h2
+              className="text-heading text-2xl lg:text-4xl font-bold mb-5"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
               {blogContent.text.title}
             </h2>
-            <p className="text-body leading-relaxed">
+            <p
+              className="text-body leading-relaxed"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
               {blogContent.text.description}
             </p>
           </div>
 
           {/* 右 */}
           <div className="lg:w-5/12 text-left lg:text-right">
-            <div className="inline-flex ml-auto space-x-3">
+            <div className="inline-flex ml-auto space-x-3 max-md:hidden">
               <div
-                className={`${isBeginning ? "" : ""}
-              group trasition-all duration-300 ease-in-out w-12 h-12 
-              cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
-              justify-center items-center`}
+                className={`${
+                  isBeginning
+                    ? "opacity-30 bg-[#E1E7EA] cursor-auto"
+                    : "opacity-100 hover:bg-green-500"
+                }
+                group trasition-all duration-300 ease-in-out w-12 h-12 
+                cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
+                justify-center items-center`}
+                onClick={prevHandler}
               >
                 <FaChevronLeft
-                  className={`${isBeginning ? "" : ""}
-                text-3xl text-green-500 transition-all duration-300 
-                ease-in-out group-hover:text-white`}
+                  className={`${
+                    isBeginning
+                      ? "group-hover:text-green-500"
+                      : "group-hover:text-white"
+                  }
+                  text-3xl text-green-500 transition-all duration-300 
+                  ease-in-out group-hover:text-white`}
                 />
               </div>
               <div
-                className={`${isEnd ? "" : ""}
-              group trasition-all duration-300 ease-in-out w-12 h-12 
-              cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
-              justify-center items-center`}
+                className={`${
+                  isEnd
+                    ? "opacity-30 bg-[#E1E7EA] cursor-auto"
+                    : "opacity-100 hover:bg-green-500"
+                }
+                group trasition-all duration-300 ease-in-out w-12 h-12 
+                cursor-pointer bg-[#E1E7EA] rounded-full inline-flex
+                justify-center items-center`}
+                onClick={nextHandler}
               >
                 <FaChevronRight
-                  className={`${isEnd ? "" : ""}
-                text-3xl text-green-500 transition-all duration-300 
-                ease-in-out group-hover:text-white`}
+                  className={`${
+                    isEnd
+                      ? "group-hover:text-green-500"
+                      : "group-hover:text-white"
+                  }
+                  text-3xl text-green-500 transition-all duration-300 
+                  ease-in-out group-hover:text-white`}
                 />
               </div>
             </div>
@@ -117,10 +180,14 @@ const Blog = () => {
               slidesPerView: 2,
             },
           }}
+          ref={sliderRef}
+          speed={700}
           className="z-50 py-32 relative flex items-stretch 
           !overflow-visible before:content-[' '] before:py-32 before:z-50
           before:right-full before:w-screen before:absolute before:-top-5 
           before:-bottom-5 before:bg-light"
+          data-aos="fade-up"
+          data-aos-delay="300"
         >
           {blogContent.blog.map((item, index) => {
             return (
