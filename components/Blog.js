@@ -88,7 +88,10 @@ const Blog = () => {
     sliderRef.current.swiper.slideNext();
   }, []);
   return (
-    <section id="blog" className="py-20 bg-light overflow-x-hidden max-md:py-5">
+    <section
+      id="blog"
+      className="py-20 bg-light overflow-x-hidden max-md:py-10"
+    >
       <div className="container px-4 mx-auto">
         <div className="lg:flex justify-between items-center mb-10">
           {/* 左 */}
@@ -182,7 +185,7 @@ const Blog = () => {
           }}
           ref={sliderRef}
           speed={700}
-          className="z-50 py-32 relative flex items-stretch 
+          className="z-50 py-32 relative flex items-stretch mb-24
           !overflow-visible before:content-[' '] before:py-32 before:z-50
           before:right-full before:w-screen before:absolute before:-top-5 
           before:-bottom-5 before:bg-light"

@@ -50,7 +50,7 @@ const Solutions = () => {
   return (
     <section
       id="solutions"
-      className="py-32 bg-light overflow-x-hidden max-md:py-5"
+      className="py-32 bg-light overflow-hidden max-md:py-5"
     >
       <div className="container px-4 mx-auto flex">
         <div
@@ -85,7 +85,8 @@ const Solutions = () => {
                     <div className="ml-auto">
                       <div
                         className="bg-yellowLight w-10 h-10 
-                        lg:w-24 lg:h-24 rounded-2xl rounded-bl-[200px]"
+                        lg:w-24 lg:h-24 rounded-2xl rounded-bl-[200px]
+                        max-md:w-16 max-md:h-16"
                       />
                     </div>
                   </div>
@@ -110,7 +111,8 @@ const Solutions = () => {
                   <div>
                     <div
                       className="bg-purpleLight w-10 h-10 
-                      lg:w-20 lg:h-20 rounded-2xl rounded-tr-[200px]"
+                      lg:w-20 lg:h-20 rounded-2xl rounded-tr-[200px]
+                      max-md:w-14 max-md:h-14"
                     />
                   </div>
 
@@ -120,7 +122,7 @@ const Solutions = () => {
                       width={547}
                       height={573}
                       alt="imag2"
-                      className="object-cover h-full w-full rounded-lg"
+                      className="object-cover h-full w-full rounded-lg shadow-2xl"
                       data-aos="fade-up"
                       data-aos-delay="300"
                     />
