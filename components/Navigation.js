@@ -20,7 +20,7 @@ const navigationMenu = [
     label: "ソリューション",
   },
   {
-    href: "#testiomonials",
+    href: "#testimonials",
     label: "カスタマー",
   },
   {
